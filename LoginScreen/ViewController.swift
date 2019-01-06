@@ -60,12 +60,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func forgotUN(_ sender: UIButton) {
-        prepareData = "Username Repair"
+        prepareData = "Username recovery"
         performSegue(withIdentifier: "loginSegue", sender: nil)
     }
     
     @IBAction func forgotP(_ sender: UIButton) {
-        prepareData = "Password Repair"
+        prepareData = "Password recovery"
         performSegue(withIdentifier: "loginSegue", sender: nil)
     }
 }

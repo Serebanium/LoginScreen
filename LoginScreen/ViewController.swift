@@ -8,13 +8,65 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+extension UIViewController{
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    @objc func DismissKeyboard(){
+        view.endEditing(true)
+    }
+}
 
+class ViewController: UIViewController, UITextFieldDelegate {
+    
+    let userName = "User"
+    let password = "123"
+    var prepareData = ""
+    
+    @IBOutlet weak var userNameTextField: UITextField!
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.hideKeyboard()
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.navigationItem.title = prepareData
+        }
+    
+    @IBAction func unwind (segue: UIStoryboardSegue) {
+        userNameTextField.text = ""
+        passwordTextField.text = ""
+        }
+    
+    @IBAction func Login(_ sender: UIButton) {
+        if userNameTextField.text == userName && passwordTextField.text == password {
+            prepareData = "Welcome"
+            performSegue(withIdentifier: "loginSegue", sender: nil)
+        } else {
+            userNameTextField.text = ""
+            passwordTextField.text = ""
+        }
+    }
+    
+    @IBAction func forgotUN(_ sender: UIButton) {
+        prepareData = "Username Repair"
+        performSegue(withIdentifier: "loginSegue", sender: nil)
+    }
+    
+    @IBAction func forgotP(_ sender: UIButton) {
+        prepareData = "Password Repair"
+        performSegue(withIdentifier: "loginSegue", sender: nil)
+    }
 }
 
